@@ -1,5 +1,6 @@
 package com.cmcltd.flexfield.data.jpa.controller;
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -9,11 +10,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cmcltd.flexfield.data.jpa.domain.Book;
 import com.cmcltd.flexfield.data.jpa.domain.CustomField;
+import com.cmcltd.flexfield.data.jpa.domain.Dept;
 import com.cmcltd.flexfield.data.jpa.domain.Employee;
 import com.cmcltd.flexfield.data.jpa.domain.EntityCustomFieldData;
 import com.cmcltd.flexfield.data.jpa.repository.EmployeeRepository;
@@ -271,6 +275,93 @@ public class EmployeeController extends BaseController {
 		}
 		logger.debug("The Employee Found are : " + employees);
 		return employees;
+	}
+	
+	@RequestMapping(value = "/create/employee", method = {
+			RequestMethod.PUT, RequestMethod.POST }, produces = "application/json")
+	@ResponseBody
+	public Employee createBook(@RequestBody Employee emp) {
+		Employee newEmp = null;
+		try {
+			logger.debug("Employee details passed " + emp);
+			String ename = emp.getEname();
+			String job = emp.getJob();
+			Integer mgr = emp.getMgr();
+			BigDecimal salary = emp.getSalary();
+			BigDecimal commission = emp.getCommision();
+			Dept dept = emp.getDept();
+			
+			
+			newEmp = new Employee(ename , job, mgr, salary, commission,dept );
+			newEmp  = empDao.save(newEmp);
+			
+			List<CustomField> cfl = emp.getCustomField();
+			logger.debug("Custom field received < "+ cfl +" >");
+			
+			if ( cfl != null){
+				logger.debug("Setting new custom field data");
+				
+				newEmp.setCustomField(cfl);
+				setCustomField(cfl);					
+				updateCustomFieldData(newEmp.getId());	
+			} else {
+				logger.debug("No Custom field create necessary");
+			}
+
+		} catch (Exception ex) {
+			logger.error("Failed to create Employee data  : " + emp);
+			logger.error("Exception : " + ex.getLocalizedMessage());
+			return newEmp;
+		}
+		return newEmp;
+	}
+	
+	
+	@RequestMapping(value = "/update/employee", method = { RequestMethod.PUT,
+			RequestMethod.POST }, consumes = "application/json", produces = "application/json")
+	@ResponseBody
+	public Employee update(@RequestBody Employee emp) {
+		logger.debug("Processing book Data <\n" + emp + ">");
+		Employee updEmp = null;
+		try {
+			logger.debug("Book ID passed =" + emp.getId().toString());
+			updEmp = empDao.findById(emp.getId().intValue());
+			
+			if (updEmp != null) {
+				updEmp.setEname(emp.getEname());
+				updEmp.setJob(emp.getJob());
+				updEmp.setMgr(emp.getMgr());
+				updEmp.setMgr(emp.getMgr());
+				empDao.save(updEmp);
+								
+				List<CustomField> cfl = emp.getCustomField();
+				logger.debug("Custom field received < "+ cfl +" >");
+				
+				if ( cfl != null){
+					logger.debug("Setting new custom field data");
+					
+					updEmp.setCustomField(cfl);
+					setCustomField(cfl);					
+					updateCustomFieldData(emp.getId());	
+				} else {
+					logger.debug("No Custom field update necessary");
+				}
+				
+				
+				logger.debug("Updated Employee Data with new detail :" + updEmp);
+				logger.debug("-----------------------------------------");
+			} else {
+				logger.debug(" Employee being Updated doesn't exists.");
+			}
+
+		} catch (Exception ex) {
+
+			logger.error("No Employee Data Found for ID : " + emp.getId());
+			logger.error("Exception : " + ex.getLocalizedMessage());
+			return emp;
+
+		}
+		return updEmp;
 	}
 
 } // class EmployeeController

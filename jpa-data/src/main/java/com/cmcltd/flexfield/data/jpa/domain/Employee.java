@@ -124,15 +124,15 @@ public class Employee extends BaseBusinessEntity {
 	
 	
 
-	public Employee(int employeeNo, String empName, String job, int mgr,
+	public Employee(String empName, String job, int mgr,
 			BigDecimal sal, BigDecimal com, Dept dept) {
 		Assert.hasText(empName, "Employee Name cannot be NULL.");
 		Assert.hasText(job, "Job cannot be NULL.");
 		Assert.isNull(sal, "Salary cannot be NULL");
-		Assert.isNull(employeeNo, "Employee No cannot be NULL");
+		
 		Assert.isNull(dept, "Department No cannot be NULL");
 
-		this.id = employeeNo;
+		
 		this.ename = empName;
 		this.job = job;
 		this.mgr = mgr;
