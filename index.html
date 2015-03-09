@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Flexfield : Spring Data JPA application to implement flexfield concept">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Flexfield</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/h0shekhar/flexfield">View on GitHub</a>
+
+          <h1 id="project_title">Flexfield</h1>
+          <h2 id="project_tagline">Spring Data JPA application to implement flexfield concept</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/h0shekhar/flexfield/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/h0shekhar/flexfield/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h2>
+<a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h2>
+
+<p>This application experiments with Spring Data JPA based concepts to implement the Flex-Field concept (aka extensible tables). Overall it uses the following 
+1 Spring Data JPA
+2 Spring Boot Data JPA
+3 SL4j with Logback
+4 Oracle Database   </p>
+
+<h2>
+<a id="access-path" class="anchor" href="#access-path" aria-hidden="true"><span class="octicon octicon-link"></span></a>Access path</h2>
+
+<p>This application provides a REST based <a href="https://github.com/Controllers" class="user-mention">@Controllers</a> to receive CRUD operation instruction. The test interface is build using Book and Employee entities and CRUD operations can be performed using the following notation</p>
+
+<ul>
+<li>http://localhost:8080/books</li>
+<li>http://localhost:8080/book/Id/{id}</li>
+</ul>
+
+<p>It also supports the JSON object as <a href="https://github.com/RequestBody" class="user-mention">@RequestBody</a> for some operations. Please check the code  </p>
+
+<h2>
+<a id="sample-data" class="anchor" href="#sample-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sample Data</h2>
+
+<p>Current implementation has been configured and tested using Oracle Database (sample tables/sequences DDLs and data is available in "db" folder </p>
+
+<h2>
+<a id="dependencies" class="anchor" href="#dependencies" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dependencies</h2>
+
+<p>Please check the POM file to understand the dependencies.   </p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Flexfield maintained by <a href="https://github.com/h0shekhar">h0shekhar</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
